@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Tugas 6 - Hiding Map</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: skyblue;
+      }
+      .map-control {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
+        font-family: 'Roboto','sans-serif';
+        margin: 20px;
+        padding-right: 15px;
+        /* Hide the control initially, to prevent it from appearing
+           before the map loads. */
+        display: none;
+      }
+      /* Display the control once it is inside the map. */
+      #map .map-control { display: block; }
+      .selector-control {
+        font-size: 24px;
+        line-height: 30px;
+        vertical-align: baseline;
+      }
+      h1{
+        text-align: center;
+        font-family: Verdana;
+        font-weight: lighter;
+        text-transform: uppercase;
+        font-size: 24px;
+      }
+      #style-selector-control{
+        padding: 5px;
+        width: 50px;
+        height: auto;
+        position: relative;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+<h1>Wilayah Indonesia</h1>
+    <div id="style-selector-control" class="map-control">
+      <input type="radio" name="show-hide" id="hide-poi"
+          class="selector-control">
+      <label for="hide-poi">Lokal</label>
+      <input type="radio" name="show-hide" id="show-poi"
+          class="selector-control" checked="checked">
+      <label for="show-poi">Global</label>
+    </div>
+    <div id="map"></div>
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -0.0123317, lng: 118.6722058},
+          zoom: 5,
+          mapTypeControl: false
+        });
+        var styledMapType = new google.maps.StyledMapType(
+            [
+              {elementType: 'geometry', stylers: [{color: '#CFD8DC'}]},
+              {elementType:'labels.text.fill', stylers:[{visibility:'off'}]},
+              {elementType: 'labels.text', stylers:[{visibility: 'off'}]},
+            ],
+            {name: 'Styled Map'}
+        );
+        // Add controls to the map, allowing users to hide/show features.
+        var styleControl = document.getElementById('style-selector-control');
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(styleControl);
+        // Apply new JSON when the user chooses to hide/show features.
+        document.getElementById('hide-poi').addEventListener('click', function() {
+          map.mapTypes.set('styled_map', styledMapType);
+          map.setMapTypeId('styled_map');
+          map.data.loadGeoJson('indonesiamap.geojson');
+          map.data.setStyle({
+          fillColor: '#0f0',
+          strokeWeight: 0});
+        });
+ map.data.addListener('mouseover', function(event) {
+          map.data.revertStyle();
+          map.data.overrideStyle(event.feature, {strokeWeight: 1,fillColor: '#FFAB40'});
+        });
+        map.data.addListener('mouseout', function(event) {
+          map.data.revertStyle();
+        });
+        document.getElementById('show-poi').addEventListener('click', function() {
+          map.setMapTypeId('terrain');
+	
+          //map.setOptions({styles: styles['default']});
+        });
+                
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWuw6yz4b0ftZRFR_CZS-SiJN00jubO-g&callback=initMap">
+    </script>
+  </body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Tugas 3 - Circled Data</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: skyblue;
+      }
+      h1{
+        text-align: center;
+        font-family: Verdana;
+        font-weight: lighter;
+        text-transform: uppercase;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>16 Besar Provinsi Produksi Padi di Indonesia Tahun 2015</h1>
+    <div id="map"></div>
+    <script>
+      var citymap = {
+        JAWA_TIMUR: {
+          center: {lat: -7.5525801, lng: 112.0924479},
+          population: 13154967
+        },
+        JAWA_BARAT: {
+          center: {lat: -6.9905092, lng: 106.8435941},
+          population: 11373144
+        },
+        JAWA_TENGAH: {
+          center: {lat: -7.0566595, lng: 109.3224686},
+          population: 11301422
+        },
+        SULAWESI_SELATAN: {
+          center: {lat: -3.6663032, lng: 119.9477202},
+          population: 5471806
+        },
+       SUMATERA_SELATAN: {
+          center: {lat: -3.2747704, lng: 103.0069484},
+          population: 4247922
+        },
+		SUMATERA_UTARA: {
+          center: {lat: 2.3737886, lng: 99.1967022},
+          population: 4044829
+        },
+       LAMPUNG: {
+          center: {lat: -4.9592027, lng: 104.6791715},
+          population: 3641895
+        },
+       SUMATERA_BARAT: {
+          center: {lat: -0.8078833, lng: 100.5867116},
+          population: 2550609
+        },
+       NUSA_TENGGARA_BARAT: {
+          center: {lat:-8.5558827, lng: 117.5981475},
+          population: 2417392
+        },
+       ACEH: {
+          center: {lat: 4.6845264, lng: 96.7383455},
+          population: 2331046
+        },
+        BANTEN: {
+          center: {lat: -6.4285904, lng:106.1261516},
+          population: 2188996
+        },
+		KALIMANTAN_SELATAN: {
+          center: {lat: -2.7309436, lng: 115.6275344},
+          population: 2140276
+        },
+		KALIMANTAN_BARAT: {
+          center: {lat: -0.4619399, lng: 111.6212144},
+          population: 1275707
+        },
+		SULAWESI_TENGAH: {
+          center: {lat: -1.5344262, lng: 121.4092735},
+          population: 1015368
+        },
+		NUSA_TENGGARA_TIMUR: {
+          center: {lat: -8.6370839, lng: 121.0010202},
+          population: 948088
+        },
+		YOGYAKARTA: {
+          center: {lat: -7.8347568, lng: 110.483213},
+          population: 945136
+        }
+      };
+
+      function initMap() {
+        // Create the map.
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 5.8,
+          center: {lat: -1.3580222, lng: 108.3402827},
+          mapTypeId: 'terrain'
+        });
+
+        // Construct the circle for each value in citymap.
+        // Note: We scale the area of the circle based on the population.
+        for (var city in citymap) {
+          // Add the circle for this city to the map.
+          var cityCircle = new google.maps.Circle({
+            strokeColor: '#0091EA',
+            strokeOpacity: 0.6,
+            strokeWeight: 1,
+            fillColor: '#FF2200',
+            fillOpacity: 0.35,
+            map: map,
+            center: citymap[city].center,
+            radius: Math.sqrt(citymap[city].population) * 15
+          });
+        }
+      }
+    </script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWuw6yz4b0ftZRFR_CZS-SiJN00jubO-g&callback=initMap">
+    </script>
+  </body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<!--
+	Spectral by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Tugas 7 - Street View</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	<style>
+      #map {
+        height: 635px;
+        width: 100%;
+      }
+	</style>
+	</head>
+	<body class="landing">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+				<!-- Banner -->
+
+				<!-- Two -->
+					<section id="two" class="wrapper alt style2">
+						<section class="spotlight">
+							<div class="image">
+								<center>
+								  <div id="map"></div>
+								</center>
+								<script>
+								  function initPano() {
+							        // Set up Street View and initially set it visible. Register the
+							        // custom panorama provider function. Set the StreetView to display
+							        // the custom panorama 'reception' which we check for below.
+							        var panorama = new google.maps.StreetViewPanorama(
+							          document.getElementById('map'), {
+							            pano: 'ums',
+							            visible: true,
+							            panoProvider: getCustomPanorama
+							        });
+							      }
+							      // Return a pano image given the panoID.
+							      function getCustomPanoramaTileUrl(pano, zoom, tileX, tileY) {
+							        // Note: robust custom panorama methods would require tiled pano data.
+							        // Here we're just using a single tile, set to the tile size and equal
+							        // to the pano "world" size.
+							        //return 'https://developers.google.com/maps/documentation/javascript/examples/full/images/panoReception1024-0.jpg';
+							         return 'ums.jpg';
+							      }
+							      // Construct the appropriate StreetViewPanoramaData given
+							      // the passed pano IDs.
+							      function getCustomPanorama(pano, zoom, tileX, tileY) {
+							        if (pano === 'ums') {
+							          return {
+							            location: {
+							              pano: 'ums',
+							              description: 'Gedung Induk Siti Walidah UMS'
+							            },
+							            links: [],
+							            // The text for the copyright control.
+							            copyright: 'Image l200150089',
+							            // The definition of the tiles for this panorama.
+							            tiles: {
+							              tileSize: new google.maps.Size(1024, 512),
+							              worldSize: new google.maps.Size(1024, 512),
+							              // The heading in degrees at the origin of the panorama
+							              // tile set.
+							              centerHeading: 45,
+							              getTileUrl: getCustomPanoramaTileUrl
+							            }
+							          };
+							        }
+							      }
+							    </script>
+							    <script async defer
+							    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWuw6yz4b0ftZRFR_CZS-SiJN00jubO-g&libraries=visualization&callback=initPano">
+							    </script>
+							</div>
+						
+						</section>
+					</section>
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
